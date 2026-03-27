@@ -2,9 +2,6 @@
 
 Agile Life는 개인의 장기 목표를 `Goal → Milestone → Sprint → Task` 구조로 나누고, Sprint Retrospective와 게이미피케이션 요소(XP, Level, Badge)를 통해 실행 흐름을 관리하는 Flutter 애플리케이션 초안입니다.
 
-GitHub placeholder:
-https://github.com/<YOUR_GITHUB_ID>/agile-life
-
 ## 프로젝트 소개
 
 기존 To-do 앱은 오늘 할 일을 빠르게 정리하는 데는 강하지만, 몇 주 또는 몇 달에 걸친 장기 목표를 꾸준히 관리하기에는 구조가 약한 경우가 많습니다. Agile Life는 개인 목표를 애자일 방식으로 쪼개어, 장기 목표를 작은 실행 단위와 회고 사이클로 연결하는 데 초점을 둡니다.
