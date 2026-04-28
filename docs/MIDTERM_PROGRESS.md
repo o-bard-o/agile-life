@@ -1,71 +1,33 @@
 # Midterm Progress
 
-## 현재 진행 상태
+## Summary
 
-중간보고서 기준으로 Agile Life는 **문헌조사와 기능 명세를 마친 뒤, Flutter 코드베이스 초안과 주요 화면 구조를 구현한 단계**입니다.
+Agile Life has moved from a generated Flutter starter into a working MVP-style app. The repository now includes a real app structure, service-ready UI copy, a minimal monochrome design system, local state interactions, and screenshots that show the current product direction.
 
-현재 저장소는 완성본이 아니라 다음 목표를 달성하기 위한 중간 산출물입니다.
+## Completed
 
-- 저장소 구조가 명확할 것
-- 주요 화면과 데이터 흐름이 보일 것
-- 이후 Firebase 및 디바이스 테스트로 확장할 수 있을 것
+- Flutter app shell with Material 3 theme
+- Bottom navigation and route structure
+- Domain models for goals, milestones, sprints, tasks, retrospectives, user stats, and badges
+- Repository interfaces and local repository implementations
+- Seed data based on the current date so screens stay populated
+- Dashboard, goals, sprint detail, retrospective, and profile screens
+- Goal creation, task check, retrospective save interactions
+- XP, level, streak, and badge calculation
+- Documentation and screenshots
 
-## 현재 구현된 내용
+## Current Limitations
 
-### 앱 구조
+- Data is local and in-memory.
+- User accounts and cloud sync are not connected yet.
+- Automated tests are not written yet.
+- Native iOS and Android device builds have not been verified in this environment.
 
-- Flutter / Dart 기반 프로젝트 정리
-- Material 3 테마 적용
-- `go_router` 기반 라우팅 및 하단 내비게이션 구조
-- 기능 단위 + 계층 분리 폴더 구조
+## Why Local Data First
 
-### 데이터 / 상태 흐름
+The first milestone focuses on product structure and interaction quality. Keeping data local made it possible to complete the screen flow, state boundaries, and repository contracts before adding cloud dependencies. The repository interfaces are already separated so a remote data source can be introduced without rewriting the presentation layer.
 
-- Goal, Milestone, Sprint, Task, Retrospective, UserStats, BadgeHistory 모델 정의
-- repository interface 정의
-- mock repository 및 seed data 구성
-- Riverpod 기반 in-memory 상태 업데이트 흐름
+## Verified
 
-### 화면 초안
-
-- 온보딩/진입 화면
-- 홈/대시보드
-- 목표 목록
-- 목표 상세
-- 목표 생성
-- Sprint 상세
-- Retrospective 작성
-- 프로필/통계
-
-### 상호작용 초안
-
-- 목표 추가
-- 태스크 체크
-- 회고 작성/수정
-- XP / Level / Badge 반영
-
-## 아직 남아 있는 내용
-
-- Firebase Auth / Firestore 실제 연동
-- 영속 저장
-- 테스트 코드 작성
-- `flutter test` 및 디바이스 실행 검증
-- 사용자 평가 및 피드백 수집
-- 세부 CRUD와 UX polish
-
-## 왜 Mock 기반 초안을 먼저 만드는가
-
-현재 단계에서는 실제 백엔드보다 다음 요소를 먼저 안정화하는 것이 중요합니다.
-
-- 어떤 데이터 구조가 필요한지
-- 어떤 화면과 사용자 흐름이 필요한지
-- 어떤 책임 분리가 유지보수에 유리한지
-
-mock 데이터와 in-memory state를 먼저 사용하면, 환경 의존성이 큰 Firebase/디바이스 테스트 없이도 프로젝트 방향성과 아키텍처를 빠르게 정리할 수 있습니다. 또한 중간보고서 제출 시점에서 “아직 시작도 안 한 프로젝트”가 아니라, **확장 가능한 앱 초안이 이미 구축된 상태**를 보여 줄 수 있습니다.
-
-## 현재 상태에 대한 정직한 메모
-
-- 이 저장소는 mock 데이터 기반 초안입니다.
-- 실제 실행 검증 완료 상태가 아닙니다.
-- 테스트는 이번 작업에서 실행하지 않았습니다.
-- 그러나 구조, 주요 화면, 상태 흐름, 문서화는 이후 구현을 이어 가기 쉬운 수준으로 정리하는 것을 목표로 했습니다.
+- Static analysis: `flutter analyze`
+- Visual check: Flutter web target through Chrome-sized mobile viewport

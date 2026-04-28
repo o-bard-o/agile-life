@@ -27,7 +27,7 @@ class GoalDetailScreen extends ConsumerWidget {
 
     if (goal == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('목표 상세')),
+        appBar: AppBar(title: const Text('목표')),
         body: const Padding(
           padding: EdgeInsets.all(20),
           child: EmptyStateCard(
@@ -40,7 +40,7 @@ class GoalDetailScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('목표 상세')),
+      appBar: AppBar(title: const Text('목표')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: [
@@ -74,23 +74,24 @@ class GoalDetailScreen extends ConsumerWidget {
                 Text(goal.description),
                 const SizedBox(height: 16),
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(999),
+                  borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: goal.progress,
-                    minHeight: 10,
+                    minHeight: 6,
+                    backgroundColor: colorScheme.surfaceContainerHighest,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  '진행률 ${(goal.progress * 100).round()}% · 목표일 ${AppDateFormatter.fullDate(goal.targetDate)}',
+                  '${(goal.progress * 100).round()}% · ${AppDateFormatter.fullDate(goal.targetDate)}까지',
                 ),
               ],
             ),
           ),
           const SizedBox(height: 24),
           const SectionHeader(
-            title: 'Milestone',
-            subtitle: '장기 Goal을 중간 성과 단위로 쪼갠 목록',
+            title: '마일스톤',
+            subtitle: '중간 성과를 순서대로 확인합니다.',
           ),
           const SizedBox(height: 12),
           ...goal.milestones.map(
@@ -121,7 +122,7 @@ class GoalDetailScreen extends ConsumerWidget {
                           Text(milestone.note),
                           const SizedBox(height: 6),
                           Text(
-                            '목표일 ${AppDateFormatter.fullDate(milestone.dueDate)}',
+                            AppDateFormatter.fullDate(milestone.dueDate),
                             style:
                                 Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
@@ -137,8 +138,8 @@ class GoalDetailScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
           const SectionHeader(
-            title: 'Sprint',
-            subtitle: '현재까지 정의된 실행 스프린트',
+            title: '스프린트',
+            subtitle: '실행 주기별 진행 상황입니다.',
           ),
           const SizedBox(height: 12),
           ...goal.sprints.map(
@@ -167,8 +168,9 @@ class GoalDetailScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     LinearProgressIndicator(
                       value: sprint.progress,
-                      minHeight: 10,
-                      borderRadius: BorderRadius.circular(999),
+                      minHeight: 6,
+                      borderRadius: BorderRadius.circular(4),
+                      backgroundColor: colorScheme.surfaceContainerHighest,
                     ),
                     const SizedBox(height: 12),
                     Text(
@@ -185,7 +187,7 @@ class GoalDetailScreen extends ConsumerWidget {
                                 pathParameters: {'sprintId': sprint.id},
                               );
                             },
-                            child: const Text('스프린트 보기'),
+                            child: const Text('스프린트 열기'),
                           ),
                         ),
                       ],

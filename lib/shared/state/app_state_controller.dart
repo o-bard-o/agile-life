@@ -18,7 +18,7 @@ class AppStateController extends Notifier<AppState> {
   late final StatsRepository _statsRepository;
   late final GamificationService _gamificationService;
 
-  bool _hasCompletedOnboarding = false;
+  bool _hasCompletedOnboarding = true;
 
   @override
   AppState build() {

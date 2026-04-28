@@ -23,13 +23,14 @@ class TaskTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: colorScheme.outlineVariant),
       ),
       child: CheckboxListTile(
         value: value,
         onChanged: (checked) => onChanged(checked ?? false),
         controlAffinity: ListTileControlAffinity.leading,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         title: Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -41,7 +42,7 @@ class TaskTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
             color: colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
             trailing,

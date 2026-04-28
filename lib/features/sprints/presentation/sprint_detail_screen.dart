@@ -29,20 +29,20 @@ class SprintDetailScreen extends ConsumerWidget {
 
     if (sprint == null || goal == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('스프린트 상세')),
+        appBar: AppBar(title: const Text('스프린트')),
         body: const Padding(
           padding: EdgeInsets.all(20),
           child: EmptyStateCard(
             icon: Icons.search_off_rounded,
             title: '스프린트를 찾을 수 없습니다',
-            message: '선택한 Sprint가 아직 생성되지 않았거나 이동되었습니다.',
+            message: '선택한 스프린트가 아직 생성되지 않았거나 이동되었습니다.',
           ),
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('스프린트 상세')),
+      appBar: AppBar(title: const Text('스프린트')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: [
@@ -85,8 +85,9 @@ class SprintDetailScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 LinearProgressIndicator(
                   value: sprint.progress,
-                  minHeight: 10,
-                  borderRadius: BorderRadius.circular(999),
+                  minHeight: 6,
+                  borderRadius: BorderRadius.circular(4),
+                  backgroundColor: colorScheme.surfaceContainerHighest,
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -110,11 +111,11 @@ class SprintDetailScreen extends ConsumerWidget {
                         tone: StatusTone.success,
                       ),
                     StatusChip(
-                      label: '태스크 완료 시 XP 획득',
+                      label: 'XP 진행',
                       tone: StatusTone.info,
                     ),
                     StatusChip(
-                      label: '회고 작성 시 +30 XP',
+                      label: '회고 +30',
                       tone: StatusTone.warning,
                     ),
                   ],
@@ -124,8 +125,8 @@ class SprintDetailScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
           const SectionHeader(
-            title: 'Task Checklist',
-            subtitle: '완전한 백엔드 없이도 in-memory state로 체크 흐름이 동작합니다.',
+            title: '체크리스트',
+            subtitle: '오늘 처리할 실행 항목입니다.',
           ),
           const SizedBox(height: 12),
           ...sprint.tasks.map(
@@ -136,7 +137,7 @@ class SprintDetailScreen extends ConsumerWidget {
                 subtitle:
                     '${task.note} · ${AppDateFormatter.monthDay(task.dueDate)}',
                 value: task.isCompleted,
-                trailing: '+${task.xpReward} XP',
+                trailing: '+${task.xpReward}',
                 onChanged: (_) {
                   ref.read(appStateControllerProvider.notifier).toggleTask(
                         sprintId: sprint.id,
@@ -148,21 +149,20 @@ class SprintDetailScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
           AppCard(
-            color: colorScheme.tertiaryContainer.withValues(alpha: 0.7),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Sprint Retrospective',
+                  '회고',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   sprint.retrospectiveCompleted
                       ? '이미 회고가 작성되어 있습니다. 필요하면 내용을 수정할 수 있습니다.'
-                      : '잘한 점, 어려웠던 점, 유지할 점, 바꿀 점을 기록해 다음 Sprint 계획의 입력값으로 사용합니다.',
+                      : '이번 실행에서 배운 점을 정리하고 다음 주 계획에 반영하세요.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onTertiaryContainer,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                 ),
                 const SizedBox(height: 16),

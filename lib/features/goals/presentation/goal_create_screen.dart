@@ -32,19 +32,19 @@ class _GoalCreateScreenState extends ConsumerState<GoalCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('목표 생성')),
+      appBar: AppBar(title: const Text('새 목표')),
       body: Form(
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
           children: [
             Text(
-              '새 Goal 초안',
+              '목표 만들기',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
             Text(
-              '간단한 정보만 입력하면 starter milestone/sprint/task가 함께 생성됩니다.',
+              '달성하고 싶은 결과와 마감일을 정하세요.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 20),
@@ -98,7 +98,7 @@ class _GoalCreateScreenState extends ConsumerState<GoalCreateScreen> {
             const SizedBox(height: 16),
             ListTile(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(8),
               ),
               tileColor: Theme.of(context).colorScheme.surface,
               title: const Text('목표일'),
@@ -110,7 +110,7 @@ class _GoalCreateScreenState extends ConsumerState<GoalCreateScreen> {
             FilledButton.icon(
               onPressed: _submit,
               icon: const Icon(Icons.add_task_rounded),
-              label: const Text('목표 생성'),
+              label: const Text('목표 저장'),
             ),
           ],
         ),
@@ -150,7 +150,7 @@ class _GoalCreateScreenState extends ConsumerState<GoalCreateScreen> {
         );
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('새 목표 초안을 추가했습니다.')),
+      const SnackBar(content: Text('새 목표를 추가했습니다.')),
     );
 
     context.go(AppRoutes.goalsPath);

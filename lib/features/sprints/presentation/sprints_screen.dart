@@ -22,18 +22,8 @@ class SprintsScreen extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
       children: [
         SectionHeader(
-          title: '스프린트 보드',
-          subtitle: 'Goal 아래에서 실행 단위를 1~2주 스프린트로 관리합니다.',
-        ),
-        const SizedBox(height: 16),
-        AppCard(
-          color: colorScheme.primaryContainer.withValues(alpha: 0.7),
-          child: Text(
-            '완료율 80% 이상 스프린트는 추가 XP를 획득합니다. 회고를 남기면 다음 스프린트 개선 흐름도 이어집니다.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onPrimaryContainer,
-                ),
-          ),
+          title: '스프린트',
+          subtitle: '이번 주 실행 단위입니다.',
         ),
         const SizedBox(height: 16),
         ...appState.sprintEntries.map(
@@ -77,8 +67,9 @@ class SprintsScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
                   LinearProgressIndicator(
                     value: entry.sprint.progress,
-                    minHeight: 10,
-                    borderRadius: BorderRadius.circular(999),
+                    minHeight: 6,
+                    borderRadius: BorderRadius.circular(4),
+                    backgroundColor: colorScheme.surfaceContainerHighest,
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -91,7 +82,7 @@ class SprintsScreen extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: StatusChip(
-                            label: '회고 작성됨',
+                            label: '회고 완료',
                             tone: StatusTone.success,
                           ),
                         ),

@@ -43,3 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Generated visual review captures
+screenshots/*.png
+!screenshots/final-dashboard-top-mobile.png
+!screenshots/final-goals-mobile.png
+!screenshots/final-sprints-mobile.png
+!screenshots/final-sprint-mobile.png
+!screenshots/final-retrospective-mobile.png
+!screenshots/final-profile-mobile.png

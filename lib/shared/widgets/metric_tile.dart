@@ -37,7 +37,7 @@ class MetricTile extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           if (caption != null) ...[
             const SizedBox(height: 8),

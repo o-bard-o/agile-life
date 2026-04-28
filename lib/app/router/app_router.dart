@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/providers/app_providers.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/goals/presentation/goal_create_screen.dart';
 import '../../features/goals/presentation/goal_detail_screen.dart';
@@ -18,29 +17,9 @@ import 'app_routes.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final hasCompletedOnboarding = ref.watch(
-    appStateControllerProvider.select((state) => state.hasCompletedOnboarding),
-  );
-
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: hasCompletedOnboarding
-        ? AppRoutes.dashboardPath
-        : AppRoutes.onboardingPath,
-    redirect: (context, state) {
-      final isOnboardingRoute =
-          state.matchedLocation == AppRoutes.onboardingPath;
-
-      if (!hasCompletedOnboarding && !isOnboardingRoute) {
-        return AppRoutes.onboardingPath;
-      }
-
-      if (hasCompletedOnboarding && isOnboardingRoute) {
-        return AppRoutes.dashboardPath;
-      }
-
-      return null;
-    },
+    initialLocation: AppRoutes.dashboardPath,
     routes: [
       GoRoute(
         path: AppRoutes.onboardingPath,

@@ -18,16 +18,16 @@ class StatusChip extends StatelessWidget {
 
     final ({Color background, Color foreground}) colors = switch (tone) {
       StatusTone.info => (
-          background: colorScheme.primaryContainer,
-          foreground: colorScheme.onPrimaryContainer,
+          background: colorScheme.primary,
+          foreground: colorScheme.onPrimary,
         ),
       StatusTone.success => (
-          background: const Color(0xFFD7F3E9),
-          foreground: const Color(0xFF136B43),
+          background: const Color(0xFFEDEDE8),
+          foreground: const Color(0xFF111111),
         ),
       StatusTone.warning => (
-          background: const Color(0xFFFFE7C5),
-          foreground: const Color(0xFF9A5A00),
+          background: const Color(0xFFF6F6F1),
+          foreground: const Color(0xFF3E403B),
         ),
       StatusTone.neutral => (
           background: colorScheme.surfaceContainerHighest,
@@ -36,17 +36,17 @@ class StatusChip extends StatelessWidget {
     };
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: colors.background,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         label,
         style: TextStyle(
           color: colors.foreground,
           fontSize: 12,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
         ),
       ),
     );

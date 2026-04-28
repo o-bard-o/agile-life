@@ -22,13 +22,10 @@ class BadgeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 22,
-            backgroundColor: colorScheme.primaryContainer,
-            child: Icon(
-              badgeIconFor(badge.iconKey),
-              color: colorScheme.onPrimaryContainer,
-            ),
+          Icon(
+            badgeIconFor(badge.iconKey),
+            size: 24,
+            color: colorScheme.onSurface,
           ),
           const SizedBox(height: 16),
           Text(

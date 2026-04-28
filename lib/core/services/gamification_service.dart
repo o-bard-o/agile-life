@@ -103,14 +103,14 @@ class GamificationService {
     addBadge(
       key: 'first_goal',
       title: '첫 목표 설정',
-      description: '첫 Goal을 만들고 장기 목표 관리를 시작했습니다.',
+      description: '장기 목표를 실행 단위로 나누기 시작했습니다.',
       iconKey: 'flag',
       condition: stats.createdGoalCount >= 1 || goals.isNotEmpty,
     );
     addBadge(
       key: 'first_sprint',
       title: '첫 스프린트 완주',
-      description: '첫 Sprint를 끝까지 완료했습니다.',
+      description: '첫 스프린트를 끝까지 완료했습니다.',
       iconKey: 'sprint',
       condition: stats.completedSprintCount >= 1,
     );
@@ -124,7 +124,7 @@ class GamificationService {
     addBadge(
       key: 'first_retro',
       title: '첫 회고 작성',
-      description: '첫 Retrospective를 작성해 다음 사이클 개선을 시작했습니다.',
+      description: '첫 회고를 작성해 다음 계획을 다듬었습니다.',
       iconKey: 'insights',
       condition: stats.retrospectiveCount >= 1,
     );

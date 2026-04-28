@@ -3,9 +3,9 @@
     "short_name": "Agile Life",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#1B5E54",
-    "theme_color": "#1B5E54",
-    "description": "Agile-based personal goal management and gamification app draft.",
+    "background_color": "#111111",
+    "theme_color": "#111111",
+    "description": "Agile-based personal goal management and execution tracking app.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

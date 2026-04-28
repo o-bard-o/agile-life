@@ -65,14 +65,14 @@ class _RetrospectiveScreenState extends ConsumerState<RetrospectiveScreen> {
           child: EmptyStateCard(
             icon: Icons.rate_review_outlined,
             title: '회고 대상을 찾을 수 없습니다',
-            message: '선택한 Sprint가 아직 준비되지 않았습니다.',
+            message: '선택한 스프린트가 아직 준비되지 않았습니다.',
           ),
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Retrospective')),
+      appBar: AppBar(title: const Text('회고')),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -90,7 +90,7 @@ class _RetrospectiveScreenState extends ConsumerState<RetrospectiveScreen> {
                   Text(goal.title),
                   const SizedBox(height: 12),
                   Text(
-                    '이번 스프린트의 실행 경험을 기록해 다음 계획 품질을 높입니다.',
+                    '이번 실행에서 배운 점을 다음 계획으로 연결합니다.',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -174,19 +174,23 @@ class _RetrospectiveField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      maxLines: 4,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hintText,
-      ),
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return '$label 항목을 입력해 주세요.';
-        }
-        return null;
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: controller,
+          maxLines: 4,
+          decoration: InputDecoration(hintText: hintText),
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return '$label 항목을 입력해 주세요.';
+            }
+            return null;
+          },
+        ),
+      ],
     );
   }
 }

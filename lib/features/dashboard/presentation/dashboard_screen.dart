@@ -22,153 +22,54 @@ class DashboardScreen extends ConsumerWidget {
     final currentSprintEntry = appState.currentSprintEntry;
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 112),
       children: [
-        Text(
-          'Agile Life',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        const SizedBox(height: 6),
-        Text(
-          '오늘의 실행과 장기 목표 흐름을 한 번에 점검합니다.',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-        ),
-        const SizedBox(height: 20),
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(28),
-            gradient: LinearGradient(
-              colors: [
-                colorScheme.primary,
-                colorScheme.tertiary,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '이번 주 방향',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.92),
-                    ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                currentSprintEntry?.sprint.objective ??
-                    'Mock 데이터 기반 MVP 초안에서 핵심 흐름을 정리하는 단계입니다.',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
-              const SizedBox(height: 24),
-              Row(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: _SummaryStat(
-                      label: 'XP',
-                      value: '${appState.userStats.xp}',
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _SummaryStat(
-                      label: 'Level',
-                      value: 'Lv.${appState.userStats.level}',
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _SummaryStat(
-                      label: 'Streak',
-                      value: '${appState.userStats.streakDays}일',
-                    ),
+                  Text('오늘', style: Theme.of(context).textTheme.headlineSmall),
+                  const SizedBox(height: 4),
+                  Text(
+                    AppDateFormatter.fullDate(DateTime.now()),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              FilledButton.tonalIcon(
-                onPressed: () => context.pushNamed(AppRoutes.goalCreateName),
-                style: FilledButton.styleFrom(
-                  backgroundColor: Colors.white.withValues(alpha: 0.18),
-                  foregroundColor: Colors.white,
-                ),
-                icon: const Icon(Icons.add_rounded),
-                label: const Text('새 목표 추가'),
-              ),
-            ],
-          ),
+            ),
+            IconButton.filled(
+              onPressed: () => context.pushNamed(AppRoutes.goalCreateName),
+              icon: const Icon(Icons.add_rounded),
+              tooltip: '목표 추가',
+            ),
+          ],
         ),
-        const SizedBox(height: 28),
-        SectionHeader(
-          title: '현재 진행 중인 스프린트',
-          subtitle: '집중해야 할 가장 가까운 실행 블록',
-        ),
-        const SizedBox(height: 12),
-        if (currentSprintEntry == null)
-          const EmptyStateCard(
-            icon: Icons.bolt_rounded,
-            title: '활성 스프린트가 없습니다',
-            message: '새 목표를 만들면 첫 스프린트가 자동으로 생성됩니다.',
-          )
-        else
-          AppCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        currentSprintEntry.sprint.title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                    StatusChip(
-                      label:
-                          sprintStatusLabel(currentSprintEntry.sprint.status),
-                      tone: sprintStatusTone(currentSprintEntry.sprint.status),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  currentSprintEntry.goal.title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                ),
-                const SizedBox(height: 12),
-                Text(currentSprintEntry.sprint.objective),
-                const SizedBox(height: 16),
-                LinearProgressIndicator(
-                  value: currentSprintEntry.sprint.progress,
-                  minHeight: 10,
-                  borderRadius: BorderRadius.circular(999),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  '${(currentSprintEntry.sprint.progress * 100).round()}% 완료 · ${currentSprintEntry.sprint.completedTaskCount}/${currentSprintEntry.sprint.totalTaskCount}개 태스크',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  AppDateFormatter.range(
-                    currentSprintEntry.sprint.startDate,
-                    currentSprintEntry.sprint.endDate,
-                  ),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-                FilledButton.tonal(
-                  onPressed: () {
+        const SizedBox(height: 20),
+        AppCard(
+          color: colorScheme.primary,
+          borderColor: colorScheme.primary,
+          padding: const EdgeInsets.all(20),
+          child: currentSprintEntry == null
+              ? _EmptyFocusPanel(
+                  onCreateGoal: () =>
+                      context.pushNamed(AppRoutes.goalCreateName),
+                )
+              : _FocusPanel(
+                  title: currentSprintEntry.sprint.title,
+                  goalTitle: currentSprintEntry.goal.title,
+                  objective: currentSprintEntry.sprint.objective,
+                  progress: currentSprintEntry.sprint.progress,
+                  completedCount: currentSprintEntry.sprint.completedTaskCount,
+                  totalCount: currentSprintEntry.sprint.totalTaskCount,
+                  xp: appState.userStats.xp,
+                  level: appState.userStats.level,
+                  streakDays: appState.userStats.streakDays,
+                  onOpenSprint: () {
                     context.pushNamed(
                       AppRoutes.sprintDetailName,
                       pathParameters: {
@@ -176,32 +77,29 @@ class DashboardScreen extends ConsumerWidget {
                       },
                     );
                   },
-                  child: const Text('스프린트 상세 보기'),
                 ),
-              ],
-            ),
-          ),
+        ),
         const SizedBox(height: 28),
-        SectionHeader(
-          title: '오늘의 태스크',
-          subtitle: '오늘 기준 due date로 잡힌 실행 항목',
+        const SectionHeader(
+          title: '오늘 할 일',
+          subtitle: '완료하면 바로 경험치가 반영됩니다.',
         ),
         const SizedBox(height: 12),
         if (appState.todayTasks.isEmpty)
           const EmptyStateCard(
             icon: Icons.today_rounded,
-            title: '오늘 등록된 태스크가 없습니다',
-            message: '다른 스프린트에서 오늘 마감 Task를 추가해 보세요.',
+            title: '오늘 예정된 일이 없습니다',
+            message: '새 목표를 만들거나 스프린트 일정을 조정해 보세요.',
           )
         else
           ...appState.todayTasks.map(
             (entry) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.only(bottom: 10),
               child: TaskTile(
                 title: entry.task.title,
                 subtitle: '${entry.goal.title} · ${entry.sprint.title}',
                 value: entry.task.isCompleted,
-                trailing: '+${entry.task.xpReward} XP',
+                trailing: '+${entry.task.xpReward}',
                 onChanged: (_) {
                   ref.read(appStateControllerProvider.notifier).toggleTask(
                         sprintId: entry.sprint.id,
@@ -212,14 +110,14 @@ class DashboardScreen extends ConsumerWidget {
             ),
           ),
         const SizedBox(height: 28),
-        SectionHeader(
-          title: '목표 진행률',
-          subtitle: '장기 목표가 어느 정도 쪼개지고 실행되고 있는지 확인합니다.',
+        const SectionHeader(
+          title: '목표 진행',
+          subtitle: '현재 집중 중인 목표의 흐름입니다.',
         ),
         const SizedBox(height: 12),
         ...appState.goals.map(
           (goal) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.only(bottom: 10),
             child: AppCard(
               onTap: () {
                 context.pushNamed(
@@ -244,22 +142,21 @@ class DashboardScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: goal.progress,
+                      minHeight: 6,
+                      backgroundColor: colorScheme.surfaceContainerHighest,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   Text(
-                    goal.description,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    '${(goal.progress * 100).round()}% · ${AppDateFormatter.fullDate(goal.targetDate)}까지',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
-                  ),
-                  const SizedBox(height: 16),
-                  LinearProgressIndicator(
-                    value: goal.progress,
-                    minHeight: 10,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    '진행률 ${(goal.progress * 100).round()}% · 목표일 ${AppDateFormatter.fullDate(goal.targetDate)}',
                   ),
                 ],
               ),
@@ -269,31 +166,27 @@ class DashboardScreen extends ConsumerWidget {
         const SizedBox(height: 28),
         SectionHeader(
           title: '최근 배지',
-          subtitle: '작은 완료 경험을 꾸준히 쌓는 구조를 보여줍니다.',
+          subtitle: '${appState.recentBadges.length}개의 성취를 기록했습니다.',
         ),
         const SizedBox(height: 12),
         if (appState.recentBadges.isEmpty)
           const EmptyStateCard(
             icon: Icons.military_tech_rounded,
-            title: '아직 획득한 배지가 없습니다',
-            message: '목표 생성, 태스크 완료, 회고 작성으로 배지를 획득합니다.',
+            title: '아직 배지가 없습니다',
+            message: '목표를 만들고 첫 태스크를 완료해 보세요.',
           )
         else
           AppCard(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: appState.recentBadges.take(2).map((badge) {
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 6),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: colorScheme.primaryContainer,
-                        child: Icon(
-                          badgeIconFor(badge.iconKey),
-                          color: colorScheme.onPrimaryContainer,
-                        ),
+                      Icon(
+                        badgeIconFor(badge.iconKey),
+                        size: 22,
+                        color: colorScheme.onSurface,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -304,6 +197,7 @@ class DashboardScreen extends ConsumerWidget {
                               badge.title,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
+                            const SizedBox(height: 2),
                             Text(
                               badge.description,
                               style: Theme.of(context)
@@ -327,8 +221,145 @@ class DashboardScreen extends ConsumerWidget {
   }
 }
 
-class _SummaryStat extends StatelessWidget {
-  const _SummaryStat({
+class _FocusPanel extends StatelessWidget {
+  const _FocusPanel({
+    required this.title,
+    required this.goalTitle,
+    required this.objective,
+    required this.progress,
+    required this.completedCount,
+    required this.totalCount,
+    required this.xp,
+    required this.level,
+    required this.streakDays,
+    required this.onOpenSprint,
+  });
+
+  final String title;
+  final String goalTitle;
+  final String objective;
+  final double progress;
+  final int completedCount;
+  final int totalCount;
+  final int xp;
+  final int level;
+  final int streakDays;
+  final VoidCallback onOpenSprint;
+
+  @override
+  Widget build(BuildContext context) {
+    const foreground = Colors.white;
+    final muted = Colors.white.withValues(alpha: 0.68);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '현재 스프린트',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: muted,
+                fontWeight: FontWeight.w800,
+              ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: foreground,
+              ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          goalTitle,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: muted),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          objective,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: foreground,
+              ),
+        ),
+        const SizedBox(height: 20),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: LinearProgressIndicator(
+            value: progress,
+            minHeight: 6,
+            backgroundColor: Colors.white.withValues(alpha: 0.2),
+            valueColor: const AlwaysStoppedAnimation<Color>(foreground),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          '${(progress * 100).round()}% · $completedCount/$totalCount 완료',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: muted),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            Expanded(child: _FocusMetric(label: 'XP', value: '$xp')),
+            _FocusDivider(),
+            Expanded(child: _FocusMetric(label: '레벨', value: 'Lv.$level')),
+            _FocusDivider(),
+            Expanded(child: _FocusMetric(label: '연속', value: '$streakDays일')),
+          ],
+        ),
+        const SizedBox(height: 20),
+        OutlinedButton.icon(
+          onPressed: onOpenSprint,
+          style: OutlinedButton.styleFrom(
+            foregroundColor: foreground,
+            side: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
+          ),
+          icon: const Icon(Icons.arrow_forward_rounded),
+          label: const Text('스프린트 열기'),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyFocusPanel extends StatelessWidget {
+  const _EmptyFocusPanel({required this.onCreateGoal});
+
+  final VoidCallback onCreateGoal;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '시작할 스프린트가 없습니다',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Colors.white,
+              ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '새 목표를 만들고 첫 실행 주기를 시작하세요.',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Colors.white.withValues(alpha: 0.72),
+              ),
+        ),
+        const SizedBox(height: 20),
+        OutlinedButton.icon(
+          onPressed: onCreateGoal,
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.white,
+            side: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
+          ),
+          icon: const Icon(Icons.add_rounded),
+          label: const Text('목표 만들기'),
+        ),
+      ],
+    );
+  }
+}
+
+class _FocusMetric extends StatelessWidget {
+  const _FocusMetric({
     required this.label,
     required this.value,
   });
@@ -338,33 +369,36 @@ class _SummaryStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.white.withValues(alpha: 0.62),
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Colors.white,
+              ),
+        ),
+      ],
+    );
+  }
+}
+
+class _FocusDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.18),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ],
-      ),
+      width: 1,
+      height: 38,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      color: Colors.white.withValues(alpha: 0.18),
     );
   }
 }

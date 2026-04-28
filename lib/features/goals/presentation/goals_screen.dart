@@ -22,8 +22,8 @@ class GoalsScreen extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
       children: [
         SectionHeader(
-          title: '목표 목록',
-          subtitle: '장기 목표를 작은 실행 단위와 함께 관리합니다.',
+          title: '목표',
+          subtitle: '진행 중인 장기 목표입니다.',
           actionLabel: '새 목표',
           onAction: () => context.pushNamed(AppRoutes.goalCreateName),
         ),
@@ -72,13 +72,19 @@ class GoalsScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  Text(goal.description),
+                  Text(
+                    goal.description,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                  ),
                   const SizedBox(height: 16),
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
                       value: goal.progress,
-                      minHeight: 10,
+                      minHeight: 6,
+                      backgroundColor: colorScheme.surfaceContainerHighest,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -90,15 +96,15 @@ class GoalsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '목표일 ${AppDateFormatter.fullDate(goal.targetDate)}',
+                    AppDateFormatter.fullDate(goal.targetDate),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   if (goal.currentSprint != null) ...[
                     const SizedBox(height: 8),
                     Text(
-                      '현재 스프린트 · ${goal.currentSprint!.title}',
+                      goal.currentSprint!.title,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w800,
                           ),
                     ),
                   ],
