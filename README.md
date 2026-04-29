@@ -21,7 +21,10 @@ Most to-do apps are optimized for short daily lists. Agile Life is designed for 
 Screenshots captured from the Flutter web target are stored in `screenshots/`.
 
 - `screenshots/final-dashboard-top-mobile.png`
+- `screenshots/final-onboarding-mobile.png`
 - `screenshots/final-goals-mobile.png`
+- `screenshots/final-goal-detail-mobile.png`
+- `screenshots/final-goal-create-mobile.png`
 - `screenshots/final-sprints-mobile.png`
 - `screenshots/final-sprint-mobile.png`
 - `screenshots/final-retrospective-mobile.png`
